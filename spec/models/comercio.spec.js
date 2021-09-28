@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
+const comercio = require('../../models/comercio.js');
 var Comercio = require('../../models/comercio.js')
+
 
 
 describe('Test modelo Comercio',function(){
@@ -33,7 +35,7 @@ describe('Test modelo Comercio',function(){
             Comercio.todos((err,list)=>{
                  cantAnterior=list.length;
             });
-            const comercioAgregar= Comercio.Constructor("Comercio shop","Chalate");
+            const comercioAgregar= Comercio.Constructor("Almacen Sauce ","La Palma");
             Comercio.guardar(comercioAgregar, function(err, cb){
                 Comercio.todos((err,list)=>{
                     cantActual=list.length;
@@ -52,8 +54,8 @@ describe('Test modelo Comercio',function(){
         it('documento actualizado', (done) => {
             let objetoA
             
-            const comercioEditar= {nombre:"comercio Prueba", direccion:"La Laguna"};
-            const id="6144f6cee9ba99999e2d7fcb"
+            const comercioEditar= {nombre:"Hot Sauce", direccion:"La Palma, Chalatenango"};
+            const id="615297551b9f803ad3be5cf2"
             Comercio.findById({_id:id},(err,objeto)=>{
                 
                 objetoA=objeto
@@ -71,17 +73,37 @@ describe('Test modelo Comercio',function(){
     })
     */
     
+    
+    
+    /*
     describe('Buscar por nombre', ()=>{
-        it('comprobar lista por nombre',(done)=>{
-            Comercio.buscar('nombre', 'Comercio 01 modificado',(err, list)=>{
+        it('Buscar un documento usando el campo de nombre',(done)=>{
+            Comercio.buscar('nombre', 'Hot Sauce',(error, list)=>{
                 console.log(list);
-                expect(err).withContext('Error en la consulta').toBeNull();
+                expect(error).withContext('Error en la consulta').toBeNull();
                 expect(list.length).withContext("no hay elementos")
-                .toBeGreaterThanOrEqual(1);
+                .toBeGreaterThanOrEqual(1)
             done();
             })
         })
     })
+    */
+    
+    
+    describe('Eliminar', ()=>{
+        it('Eliminar un documento',(done) => {
+            const id = '615297551b9f803ad3be5cf2';
+            comercio.findById(id, done);
+            const cantA = Comercio.todos()
+            Comercio.eliminar(id, (error) => {
+            const cantN = cantA;
+            expect(error).withContext('error en la consulta').toBeNull();
+            expect(cantN).toBe(cantA - 1);
+            done()
+            })
+        })
+    })
+    
     
 
 })

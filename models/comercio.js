@@ -22,19 +22,16 @@ ComercioSchema.statics.guardar = function(comercio, cb){
     return comercio.save(cb);
 }
 
-ComercioSchema.statics.actualizar = function(id, comercio, cb){
-    
-    return this.findByIdAndUpdate({_id:id},{"$set":comercio},cb);
+ComercioSchema.statics.actualizar = function (id, comercio, cb) {
+    return this.findByIdAndUpdate(id, { "$set": comercio }, { returnOriginal: false }, cb);
 }
 
-ComercioSchema.statics.buscar = function(id, comercio, cb){
-    
-    return this.findOne({"$set":comercio},cb);
+ComercioSchema.statics.buscar = function (prop, value, cb) {
+    return this.find({ [prop]: value }, cb)
 }
 
-ComercioSchema.statics.eliminar = function(id, comercio, cb){
-    
-    return this.findByIdAndDelete({_id:id},{"$set":comercio},cb);
+ComercioSchema.statics.eliminar = function (id, cb) {
+    return this.findByIdAndDelete(id, {}, cb);
 }
 
 
